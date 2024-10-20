@@ -1,0 +1,17 @@
+class Solution {
+    public int coinChange(int[] coins, int amount) {
+        int[] values = new int[amount+1];
+        Arrays.fill(values, amount+1);
+        values[0] = 0;
+        for(int i=1; i<values.length; i++){
+            for(int j=0; j<coins.length; j++){
+                if(i-coins[j]>=0){
+                    values[i] = Math.min(values[i-coins[j]]+1,values[i]);
+                }
+            }
+        }
+        if(values[amount] < 0 || values[amount] >= amount+1)
+            return -1;
+        return values[amount];
+    }
+}
