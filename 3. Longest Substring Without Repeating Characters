@@ -1,0 +1,30 @@
+#keep Udating Starting Pointer, Map to store index 
+
+
+
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        Map<Character, Integer> map = new HashMap<Character, Integer>();
+        char[] letters = s.toCharArray();
+        int startingPointer = 0;
+        int maxLength = 0;
+        int currentLength =0;
+        for(int i=0; i<letters.length ; i++){
+            if(map.containsKey(letters[i]) && map.get(letters[i]) != null){
+                currentLength = i - startingPointer;
+                maxLength = Math.max(maxLength, currentLength);
+                for(int j = startingPointer ; j < map.get(letters[i]); j++){
+                    map.remove(letters[j]);
+                }
+                startingPointer = map.get(letters[i])+1;
+                map.put(letters[i], i);
+            }
+            else{
+                map.put(letters[i], i);
+                currentLength = i - startingPointer + 1;
+                maxLength = Math.max(maxLength, currentLength);
+            }
+        }
+        return maxLength;
+    }
+}
